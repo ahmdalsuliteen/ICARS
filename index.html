@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0c0e">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://*.googleapis.com https://*.firebaseio.com https://*.firebaseapp.com; frame-src https://*.firebaseapp.com; object-src 'none'; base-uri 'none'; form-action 'self'">
+<meta name="referrer" content="no-referrer">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lalezar&family=Tajawal:wght@400;700;800&display=swap">
+<title>ICARS | مرجع سيارتي</title>
+<style>
+:root,[data-theme=dark]{--bg:#0b0c0e;--card:#15171a;--ink:#eceff1;--mut:#8b939a;--line:#262a2f;--pri:#d9dde1;--on:#0b0c0e;--pg:linear-gradient(135deg,#f4f6f8,#a9afb6);--ok:#3ccf8a;--soon:#f0b429;--bad:#ff5a5a;--new:#7d868d;--r:16px;--st:radial-gradient(120% 90% at 50% 8%,#2c2f33 0%,#111315 60%,#08090a 100%)}
+[data-theme=light]{--bg:#eceef0;--card:#fff;--ink:#101214;--mut:#5f676e;--line:#d9dde1;--pri:#15171a;--on:#fff;--pg:linear-gradient(135deg,#2a2d31,#0b0c0e);--ok:#178a55;--soon:#a87400;--bad:#d23c3c;--new:#6b747b;--st:radial-gradient(120% 90% at 50% 8%,#fff 0%,#d5d9dd 65%,#bcc1c6 100%)}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.6 Tajawal,"Segoe UI",Tahoma,system-ui,sans-serif;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);min-height:100vh}
+h1,h2,.brand b,.rt b,.sum b,.digits span{font-family:Lalezar,Tajawal,Tahoma,sans-serif;font-weight:400}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;min-height:44px;border-radius:12px;border:1px solid var(--line);background:var(--card);padding:0 16px;font-weight:700}
+button.p{background:var(--pg);color:var(--on);border:0;font-weight:800}button.d{color:var(--bad)}
+:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+input,select,textarea{width:100%;min-height:44px;padding:8px 12px;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+label{display:block;font-size:.9rem;color:var(--mut);margin:12px 0 4px}
+.w{max-width:1100px;margin:auto;padding:16px}.hide{display:none!important}
+#auth{max-width:380px;margin:12vh auto;padding:24px;background:var(--card);border-radius:24px;border:1px solid var(--line)}#auth h1{margin:0 0 4px;font-size:2.4rem}
+.top{padding:12px 16px;border-bottom:1px solid var(--line)}.top .w{padding:0}.brand b{font-size:1.9rem;letter-spacing:2px;display:block;line-height:1.1;background:var(--pg);-webkit-background-clip:text;background-clip:text;color:transparent}.brand small{color:var(--mut)}
+#th,#ac{min-height:40px;width:40px;padding:0;border-radius:50%}
+#alert .al{background:var(--bad);color:#fff;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 16px;font-weight:800;position:sticky;top:0;z-index:30}
+#alert .al button{background:#fff;color:#b32222;border:0;min-height:36px}
+#alert{position:sticky;top:0;z-index:30}
+.hero{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(280px,1fr);gap:14px;padding-top:14px;padding-bottom:0}
+@media(max-width:820px){.hero{grid-template-columns:1fr}}
+#stage{position:relative;height:clamp(340px,56vh,540px);border-radius:24px;overflow:hidden;background:var(--st);border:1px solid var(--line);touch-action:pan-y;cursor:grab;user-select:none}
+#cv{display:block;width:100%;height:100%}
+#stage.nogl::after{content:"المجسم 3D ما تحمّل (تأكد من النت). باقي الميزات شغالة.";display:grid;place-items:center;height:100%;padding:20px;text-align:center;position:absolute;inset:0}
+#hs{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.hs{position:absolute;left:0;top:0;margin:-6px 0 0 -6px;width:12px;height:12px;min-height:0;padding:0;border-radius:50%;border:1.5px solid #fff;background:var(--new);opacity:.8;pointer-events:auto;transition:opacity .25s,scale .15s;box-shadow:0 1px 4px #0009}
+.hs::before{content:"";position:absolute;inset:-12px;border-radius:50%}
+.hs.soon,.hs.bad{width:20px;height:20px;margin:-10px 0 0 -10px;border-width:2px;opacity:1}
+.hs::after{content:attr(data-l);position:absolute;top:-30px;left:50%;transform:translateX(-50%);background:#000d;color:#fff;font-size:.75rem;white-space:nowrap;padding:2px 10px;border-radius:99px;opacity:0;pointer-events:none;transition:opacity .15s}
+@media(hover:hover){.hs:hover{scale:1.4;opacity:1}.hs:hover::after{opacity:1}}
+.hs.ok{background:var(--ok)}.hs.soon{background:var(--soon)}.hs.bad{background:var(--bad)}.hs.off{opacity:0;pointer-events:none}
+@keyframes pl{0%{box-shadow:0 0 0 0 #ff5a5acc}100%{box-shadow:0 0 0 18px #ff5a5a00}}
+.views{position:absolute;top:10px;inset-inline-start:10px;display:flex;gap:6px;flex-wrap:wrap;max-width:calc(100% - 20px)}
+.views button,.sw button{min-height:34px;padding:0 12px;border-radius:99px;background:#80808033;color:var(--ink);border:1px solid #80808055;font-size:.85rem;backdrop-filter:blur(8px)}
+.views button[aria-pressed=true]{background:var(--pg);color:var(--on)}
+.sw{position:absolute;bottom:10px;inset-inline-end:12px;display:flex;gap:8px}
+.sw button{width:22px;height:22px;min-height:0;padding:0;border:2px solid #fff9}.sw button[aria-pressed=true]{border-color:#fff;scale:1.25}
+.hint{transition:opacity .6s;position:absolute;bottom:42px;left:0;right:0;margin:0;text-align:center;color:var(--mut);font-size:.8rem;pointer-events:none}
+.hp{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:12px;justify-content:center}
+.ring{position:relative;width:140px;margin:auto}.ring svg{transform:rotate(-90deg);display:block}
+.rb{fill:none;stroke:var(--line);stroke-width:10}.rf{fill:none;stroke:var(--ok);stroke-width:10;stroke-linecap:round;stroke-dasharray:326.7;stroke-dashoffset:326.7;transition:stroke-dashoffset 1s ease,stroke .5s}
+.rt{position:absolute;inset:0;display:grid;place-content:center;text-align:center}.rt b{font-size:2.4rem;line-height:1}.rt small{color:var(--mut)}
+.odoc{text-align:center}.odoc>span{color:var(--mut);font-size:.9rem}
+.digits{direction:ltr;display:flex;gap:3px;justify-content:center;margin:6px 0 10px}
+.digits span{background:#000;color:#e8ecef;font-size:1.7rem;line-height:1;padding:8px 7px;border-radius:8px;border:1px solid #333}
+.odo{display:flex;gap:8px;justify-content:center}.odo input{width:140px;direction:ltr;text-align:center}
+.dly{display:flex;gap:8px;align-items:center;justify-content:center;color:var(--mut);font-size:.9rem}.dly input{width:90px;text-align:center;direction:ltr}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:12px 0}.tabs button{white-space:nowrap}.tabs button[aria-pressed=true]{background:var(--pg);color:var(--on);border:0}
+.tabs.nav{position:sticky;top:var(--alh,0px);z-index:20;background:var(--bg)}
+.ban{background:var(--card);border:1px solid var(--line);border-inline-start:5px solid var(--soon);border-radius:var(--r);padding:12px 14px;margin:10px 0;display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}.ban.w2{border-inline-start-color:var(--pri)}
+h2{margin:22px 0 8px;font-size:1.3rem}
+.sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:4px 0 8px}
+.sum div{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:10px 14px;border-inline-start:5px solid var(--new)}.sum b{font-size:1.7rem;display:block;line-height:1.3}
+.sum .ok{border-inline-start-color:var(--ok)}.sum .soon{border-inline-start-color:var(--soon)}.sum .bad{border-inline-start-color:var(--bad)}
+.pri{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}
+.pc{flex:0 0 220px;scroll-snap-align:start;background:var(--card);border:1px solid var(--line);border-top:4px solid var(--new);border-radius:var(--r);padding:12px;display:flex;flex-direction:column;gap:6px}
+.pc.bad{border-top-color:var(--bad)}.pc.soon{border-top-color:var(--soon)}.pc span{font-size:.85rem;color:var(--mut)}.pc.bad span{color:var(--bad);font-weight:700}
+.bar{display:flex;gap:8px;margin:10px 0}.bar input{flex:1}
+.rows{display:grid;gap:8px}
+.row{background:var(--card);border:1px solid var(--line);border-radius:14px;border-inline-start:4px solid var(--new)}
+.row.ok{border-inline-start-color:var(--ok)}.row.soon{border-inline-start-color:var(--soon)}.row.bad{border-inline-start-color:var(--bad)}
+.row summary{list-style:none;display:flex;gap:10px;align-items:center;padding:12px 14px;min-height:54px;cursor:pointer}.row summary::-webkit-details-marker{display:none}
+.row summary b{flex:1}.row summary em{font-style:normal;font-size:.85rem;color:var(--mut);text-align:end}
+.row.bad summary em{color:var(--bad);font-weight:800}.row.soon summary em{color:var(--soon)}
+.rb2{padding:0 14px 14px}.rb2 button{width:100%}.m{margin:6px 0 10px;font-size:.92rem}.t{margin:0 0 6px;font-size:.88rem;color:var(--mut)}
+.rec{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;margin-bottom:10px}.r{display:flex;justify-content:space-between;gap:8px;align-items:start}
+.rec .meta{color:var(--mut);font-size:.88rem;margin-top:4px}.rec p{margin:6px 0 0;white-space:pre-wrap;overflow-wrap:anywhere}
+dialog{border:0;border-radius:24px;padding:20px;width:min(480px,94vw);background:var(--card);color:var(--ink);max-height:92vh}dialog::backdrop{background:#000a}
+@media(max-width:600px){dialog{margin:auto 0 0;width:100%;max-width:none;border-radius:24px 24px 0 0;padding-bottom:calc(20px + env(safe-area-inset-bottom))}}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.act{display:flex;gap:10px;margin-top:16px}.act button{flex:1}
+.err{color:var(--bad);min-height:1.4em;font-size:.9rem}.empty{padding:28px;text-align:center;color:var(--mut)}.note{font-size:.82rem;color:var(--mut);margin-top:20px}
+.qs{max-height:46vh;overflow-y:auto;padding:0 2px}
+.chart{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px;margin-bottom:12px}.chart svg{width:100%;height:auto;display:block}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 12px}
+#toast{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));left:50%;transform:translate(-50%,90px);background:#000;color:#fff;padding:10px 18px;border-radius:99px;transition:transform .3s;z-index:99;max-width:90vw;text-align:center}#toast.on{transform:translate(-50%,0)}
+@media(max-width:420px){.row2{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:no-preference){.hs.bad{animation:pl 1.3s infinite}dialog[open]{animation:pop .25s cubic-bezier(.2,1.3,.4,1)}@keyframes pop{from{opacity:0;transform:translateY(24px)}}#alert .al{animation:sh .6s}@keyframes sh{20%{transform:translateX(8px)}40%{transform:translateX(-8px)}60%{transform:translateX(5px)}80%{transform:translateX(-3px)}}}
+@media print{.top,.hero,.tabs,.bar,#home,button,.note,#alert{display:none!important}#log{display:block!important}}
+
+#stage.used .hint{opacity:0}#hs{z-index:2}
+button{transition:scale .12s,background .2s}button:active{scale:.95}
+.pc,.sum div{transition:transform .2s,box-shadow .2s}
+@media(hover:hover){.pc:hover,.sum div:hover{transform:translateY(-3px);box-shadow:0 8px 24px #0005}}
+@keyframes up{from{opacity:0;transform:translateY(12px)}}
+[data-a] .row{animation:up .45s both}
+[data-a] .row:nth-child(2){animation-delay:.05s}[data-a] .row:nth-child(3){animation-delay:.1s}[data-a] .row:nth-child(4){animation-delay:.15s}[data-a] .row:nth-child(5){animation-delay:.2s}[data-a] .row:nth-child(6){animation-delay:.25s}[data-a] .row:nth-child(7){animation-delay:.3s}[data-a] .row:nth-child(8){animation-delay:.35s}
+@keyframes sheen{to{transform:translateX(120%)}}@keyframes gl{50%{box-shadow:inset 0 0 0 100px #ffffff1a}}@keyframes glow{50%{box-shadow:0 0 0 4px #ff5a5a44}}
+@keyframes pl2{0%{box-shadow:0 0 0 0 #f0b429bb}100%{box-shadow:0 0 0 14px #f0b42900}}
+@media(prefers-reduced-motion:no-preference){
+#stage::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 40%,#ffffff18 50%,transparent 60%);transform:translateX(-120%);animation:sheen 7s infinite;pointer-events:none;z-index:1}
+.hs.soon{animation:pl2 1.8s infinite}.sum .bad{animation:glow 2s infinite}#alert .al{animation:sh .6s,gl 2s .6s infinite}}
+
+:root{--t:#7c6cff}[data-theme=light]{--t:#5b4bdb}
+html{font-size:clamp(15px,.82rem + .4vw,17.5px);-webkit-text-size-adjust:100%;scrollbar-width:thin;scrollbar-color:var(--t) transparent}
+body{min-height:100dvh}input,select,textarea{font-size:16px}
+::selection{background:var(--t);color:#fff}
+:focus-visible{outline-color:var(--t)}
+input:focus,select:focus,textarea:focus{border-color:var(--t);box-shadow:0 0 0 3px color-mix(in srgb,var(--t) 25%,transparent);outline:none}
+.brand b::after{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--t);margin-inline-start:6px;box-shadow:0 0 10px var(--t)}
+.tabs button[aria-pressed=true]{box-shadow:0 3px 0 var(--t)}
+.digits span:last-child{color:var(--t)}
+.hs::after{border-bottom:2px solid var(--t)}
+.views button[aria-pressed=true]{box-shadow:0 0 14px color-mix(in srgb,var(--t) 70%,transparent)}
+.row[open]{box-shadow:0 0 0 1px var(--t)}
+.row summary::after{content:"+";font-size:1.5rem;line-height:1;color:var(--mut);transition:transform .3s,color .3s}.row[open] summary::after{transform:rotate(45deg);color:var(--t)}
+#prog{position:fixed;top:0;inset-inline:0;height:3px;background:var(--t);transform:scaleX(0);transform-origin:right;z-index:60;pointer-events:none}
+@keyframes grow{to{transform:scaleX(1)}}@supports(animation-timeline:scroll()){#prog{animation:grow linear both;animation-timeline:scroll(root)}}
+/* مقاسات */
+.w{max-width:1280px;padding:clamp(12px,3vw,28px)}
+#stage{height:clamp(280px,54svh,620px)}
+.digits span{font-size:clamp(1.25rem,5.4vw,1.9rem)}.odo input{width:min(150px,38vw)}
+.rows{grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));align-items:start}
+.tabs{scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
+.sum{grid-template-columns:repeat(auto-fit,minmax(min(100%,110px),1fr))}
+dialog{max-height:92dvh}
+@media(min-width:900px){.hero{grid-template-columns:minmax(0,1.7fr) minmax(300px,1fr)}.hp{padding:24px}}
+@media(max-width:899px){.hero{grid-template-columns:1fr}}
+@media(min-width:560px) and (max-width:899px){.hp{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:18px}.hp .dly{grid-column:1/-1}}
+@media(min-width:1500px){.w{max-width:1440px}#stage{height:clamp(480px,60svh,720px)}}
+@media(max-height:500px) and (orientation:landscape){.hero{grid-template-columns:1.3fr 1fr}#stage{height:86svh}.hp{padding:12px;gap:8px}.ring{width:100px}.rt b{font-size:1.7rem}}
+@media(max-width:360px){.brand b{font-size:1.5rem}.views button{padding:0 9px;font-size:.78rem}.row summary{padding:10px}.pc{flex-basis:190px}}
+@media(max-width:600px){dialog{max-height:90dvh}}
+/* حركات */
+button:not(.hs){position:relative;overflow:hidden}
+.rpl{position:absolute;border-radius:50%;background:currentColor;opacity:.25;transform:scale(0);animation:rp .6s ease-out forwards;pointer-events:none}@keyframes rp{to{transform:scale(1);opacity:0}}
+@keyframes spin{to{rotate:360deg}}
+.ld{pointer-events:none;color:transparent!important}.ld::after{content:"";position:absolute;inset:0;margin:auto;width:18px;height:18px;border-radius:50%;border:2px solid var(--ink);border-top-color:transparent;animation:spin .7s linear infinite}.p.ld::after{border-color:var(--on);border-top-color:transparent}
+.sk{height:54px;border-radius:14px;border:1px solid var(--line);background:linear-gradient(90deg,var(--card) 25%,color-mix(in srgb,var(--line) 60%,var(--card)) 50%,var(--card) 75%);background-size:200% 100%;animation:shimmer 1.2s infinite}@keyframes shimmer{to{background-position:-200% 0}}
+#splash{position:fixed;inset:0;z-index:100;background:var(--bg);display:grid;place-items:center;transition:opacity .5s,transform .6s cubic-bezier(.7,0,.3,1)}
+#splash.out{opacity:0;transform:translateY(-6%);pointer-events:none}
+#splash .sp{text-align:center}#splash svg{width:min(60vw,260px);height:auto;fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 8px var(--t))}
+#splash path,#splash circle{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.2s .1s ease forwards}
+#splash b{display:block;font:400 clamp(2.2rem,9vw,3.4rem)/1 Lalezar,Tajawal,sans-serif;margin-top:8px;background:var(--pg);-webkit-background-clip:text;background-clip:text;color:transparent;animation:track 1s .3s both}
+#splash i{display:block;height:3px;width:min(50vw,200px);margin:14px auto 0;background:linear-gradient(90deg,var(--t),transparent);transform-origin:right;animation:load 1.3s ease both}
+@keyframes draw{to{stroke-dashoffset:0}}@keyframes track{from{letter-spacing:.5em;opacity:0}}@keyframes load{from{transform:scaleX(0)}}
+@keyframes authIn{from{opacity:0;transform:translateY(30px) scale(.94)}}@keyframes shk{20%,60%{transform:translateX(-10px)}40%,80%{transform:translateX(10px)}}
+@keyframes dn{from{opacity:0;transform:translateY(-16px)}}@keyframes vin{from{opacity:0;transform:translateX(24px)}}
+@keyframes sheetUp{from{transform:translateY(100%)}}@keyframes sheetOut{to{transform:translateY(60%);opacity:0}}@keyframes fadeIn{from{opacity:0}}
+@keyframes leave{to{opacity:0;transform:translateY(20px) scale(.98)}}@keyframes tapx{from{box-shadow:0 0 0 0 var(--t)}to{box-shadow:0 0 0 24px transparent}}
+@keyframes rvl{from{opacity:0;transform:translateY(24px) scale(.97)}}
+@media(prefers-reduced-motion:no-preference){
+#auth{animation:authIn .8s cubic-bezier(.2,.9,.3,1) both}#auth.shake{animation:shk .45s}
+#app.enter .top{animation:dn .6s both}#app.enter #stage{animation:up .8s .1s cubic-bezier(.2,.9,.3,1) both}#app.enter .hp{animation:up .8s .25s cubic-bezier(.2,.9,.3,1) both}#app.enter .nav{animation:dn .6s .4s both}
+#app.enter #home>*{animation:up .6s both}#app.enter #home>:nth-child(1){animation-delay:.5s}#app.enter #home>:nth-child(2){animation-delay:.57s}#app.enter #home>:nth-child(3){animation-delay:.64s}#app.enter #home>:nth-child(4){animation-delay:.71s}#app.enter #home>:nth-child(5){animation-delay:.78s}#app.enter #home>:nth-child(6){animation-delay:.85s}#app.enter #home>:nth-child(7){animation-delay:.92s}
+.vin{animation:vin .4s cubic-bezier(.2,.9,.3,1)}
+#app.leave{animation:leave .38s forwards}
+dialog[open]::backdrop{animation:fadeIn .3s}dialog.out{animation:sheetOut .18s forwards!important}
+.hs.tap{animation:tapx .5s}
+#stage::before{background:linear-gradient(115deg,transparent 40%,color-mix(in srgb,var(--t) 24%,transparent) 50%,transparent 60%)}
+}
+@media(prefers-reduced-motion:no-preference) and (max-width:600px){dialog[open]{animation:sheetUp .38s cubic-bezier(.2,.9,.3,1)}}
+@supports(animation-timeline:view()){@media(prefers-reduced-motion:no-preference){.rec,.chart,.pc{animation:rvl linear both;animation-timeline:view();animation-range:entry 0% entry 35%}}}
+@supports(selector(::details-content)){:root{interpolate-size:allow-keywords}.row::details-content{block-size:0;overflow:clip;transition:block-size .3s,content-visibility .3s allow-discrete}.row[open]::details-content{block-size:auto}}
+@media(prefers-reduced-motion:reduce){#splash{display:none}}
+
+/* ===== نسخة مرتبة للجوال ===== */
+html{font-size:clamp(14px,.78rem + .4vw,17px)}body{line-height:1.5}
+section{scroll-margin-top:calc(var(--alh,0px) + 56px)}
+.top{padding:8px 14px}.brand b{font-size:1.5rem}.brand small{font-size:.75rem}#hi{display:none}@media(min-width:520px){#hi{display:block}}
+#alert .al{padding:6px 14px;font-size:.92rem}#alert .al button{min-height:30px;padding:0 12px}
+.hero{padding-top:10px;gap:10px}
+#stage{height:clamp(230px,38svh,380px);border-radius:20px}
+.views button{min-height:30px;padding:0 10px;font-size:.78rem}.views button[data-act]{min-width:34px;padding:0 6px}
+.sw{inset-inline:0;justify-content:center;bottom:8px;gap:6px}.sw button{width:20px;height:20px}
+@media(max-width:899px){
+ .hp{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;padding:12px 14px;border-radius:20px}
+ .ring{width:84px;margin:0}.rt b{font-size:1.5rem}.rt small{font-size:.62rem}
+ .odoc{text-align:start}.odoc>span{font-size:.75rem}.digits{margin:4px 0 8px;justify-content:flex-start}.digits span{font-size:clamp(1rem,5vw,1.5rem);padding:6px 5px}
+ .odo{justify-content:flex-start}.odo input{width:100%;max-width:150px;min-height:38px}.odo button{min-height:38px;padding:0 14px}}
+.tabs{padding:6px 0}.tabs.nav{padding:8px 0;gap:6px}.tabs.nav button{flex:1;min-height:40px;padding:0 8px;font-size:.92rem}.tabs.nav #more{flex:0 0 46px}
+.tabs.sm button{min-height:34px;font-size:.82rem;padding:0 12px}
+.hd,.sec-t{display:flex;align-items:baseline;justify-content:space-between;margin:16px 0 8px}.hd h2,.sec-t h2{margin:0;font-size:1.1rem}.hd small{color:var(--mut)}
+.row summary{padding:10px 12px;min-height:48px;font-size:.95rem}.row summary em{font-size:.8rem}.ic{font-size:1.1rem}
+.cgrid,.qgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(min-width:620px){.cgrid,.qgrid{grid-template-columns:repeat(3,1fr)}}@media(min-width:1000px){.cgrid{grid-template-columns:repeat(4,1fr)}}
+.cc,.qk{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:12px;text-align:start;border-radius:16px;border-inline-start:4px solid var(--new);height:auto}
+.cc{min-height:96px}.qk{min-height:62px;border-radius:14px}
+.cc.ok,.qk.ok{border-inline-start-color:var(--ok)}.cc.soon,.qk.soon{border-inline-start-color:var(--soon)}.cc.bad,.qk.bad{border-inline-start-color:var(--bad)}
+.cc .i{font-size:1.5rem;line-height:1}.cc b{font-size:.98rem}.cc small,.qk small{color:var(--mut);font-size:.78rem;font-weight:400}.cc small.bd2{font-weight:800}.cc.bad small.bd2,.qk.bad small{color:var(--bad)}.cc.soon small.bd2,.qk.soon small{color:var(--soon)}
+.qk b{font-size:.92rem}
+.back{min-height:38px;padding:0 14px;margin-top:8px}
+#cq{margin:4px 0}
+.cta,.good{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-top:10px}
+.cta{border-style:dashed;border-color:var(--t);text-align:center}.cta p{color:var(--mut);margin:6px 0 12px;font-size:.9rem}.good{border-inline-start:4px solid var(--ok);font-weight:700}
+.note2{color:var(--mut);font-size:.85rem;margin:12px 0 0}.lnk{min-height:0;border:0;background:none;padding:0;color:var(--t);text-decoration:underline;font-weight:700}
+button.more{width:100%;margin-top:8px}
+.menu{display:grid;gap:10px}.menu .dly{display:grid;gap:4px;justify-content:stretch;text-align:start}.menu .dly input{width:100%}
+@media(min-width:900px){#home{display:grid;grid-template-columns:2fr 1fr;gap:18px;align-items:start}#ban{grid-column:1/-1}#qc .hd{margin-top:0}#att>.hd:first-child{margin-top:0}.qgrid{grid-template-columns:1fr 1fr}}
+.pri{gap:8px}.pc{flex:0 0 168px;padding:10px 12px;gap:4px;border-radius:14px}.pc b{font-size:.9rem;line-height:1.3}.pc span{font-size:.78rem}.pc button{min-height:36px;font-size:.88rem;margin-top:auto}
+@media(min-width:900px){.pc{flex-basis:190px}}
+</style>
+</head>
+<body>
+<script>setTimeout(function(){var e=document.getElementById("splash");if(e)e.remove()},6000)</script>
+<div id="splash" aria-hidden="true"><div class="sp"><svg viewBox="0 0 220 70"><path pathLength="1" d="M12 52 L20 52 A12 12 0 0 1 44 52 L132 52 A12 12 0 0 1 156 52 L200 52 C206 52 208 46 204 42 L190 36 L160 28 L132 12 C126 8 96 8 88 12 L60 28 L26 34 C16 36 10 44 12 52 Z"/><circle pathLength="1" cx="32" cy="52" r="9"/><circle pathLength="1" cx="144" cy="52" r="9"/></svg><b>ICARS</b><i></i></div></div>
+<div id="prog"></div>
+<main id="auth">
+  <h1>ICARS</h1><p style="color:var(--mut);margin:0 0 8px">مرجعك الأول والأخير لسيارتك</p>
+  <form id="af">
+    <label for="em">الإيميل</label><input id="em" type="email" autocomplete="email" required maxlength="120" dir="ltr">
+    <label for="pw">الباسوورد (8 أحرف على الأقل)</label><input id="pw" type="password" autocomplete="current-password" required minlength="8" maxlength="100" dir="ltr">
+    <p class="err" id="ae" role="alert"></p>
+    <div class="act"><button class="p" id="li" type="submit">دخول</button><button id="su" type="button">حساب جديد</button></div>
+  </form>
+</main>
+
+<div id="app" class="hide">
+  <div id="alert" role="alert"></div>
+  <header class="top"><div class="w tb" style="display:flex;justify-content:space-between;align-items:center">
+    <div class="brand"><b>ICARS</b><small id="mdl"></small></div><div id="hi" style="flex:1;text-align:end;color:var(--mut)"></div><button id="ac" aria-label="لون الواجهة">🎨</button><button id="th" aria-label="تبديل الوضع الداكن والفاتح"></button>
+  </div></header>
+  <section class="hero w">
+    <div id="stage"><canvas id="cv" aria-label="مجسم ثلاثي الأبعاد للسيارة"></canvas><div id="hs"></div>
+      <div class="views"><button data-view="front">قدام</button><button data-view="side">جنب</button><button data-view="rear">ورا</button><button data-view="top">فوق</button><button data-act="xray" aria-pressed="false" aria-label="شفّاف" title="شفّاف">🫧</button><button data-act="drive" aria-pressed="false" aria-label="تشغيل" title="تشغيل">🏁</button><button data-act="lights" aria-pressed="false" aria-label="أضواء" title="أضواء">💡</button></div>
+      <div class="sw" id="sw" role="group" aria-label="لون السيارة"></div>
+      <p class="hint">اسحب للتدوير • اضغط أي نقطة</p></div>
+    <div class="hp">
+      <div class="ring"><svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="52" class="rb"/><circle cx="60" cy="60" r="52" class="rf" id="rf"/></svg><div class="rt"><b id="sc">0</b><small>صحة السيارة</small></div></div>
+      <div class="odoc"><span>العداد (كم)</span><div class="digits" id="dg" aria-live="polite"></div>
+        <div class="odo"><input id="oi" type="number" inputmode="numeric" min="0" max="2000000" aria-label="قراءة العداد الحالية" placeholder="مثلاً 260000"><button id="ob">تحديث</button></div></div>
+      
+    </div>
+  </section>
+  <div class="w">
+    <nav class="tabs nav" aria-label="التنقل">
+      <button data-tab="home" aria-pressed="true">الرئيسية</button>
+      <button data-tab="sec" aria-pressed="false">الأقسام</button>
+      <button data-tab="log" aria-pressed="false">السجل</button>
+      <button id="more" aria-label="المزيد">⋯</button>
+    </nav>
+    <section id="home"><div id="ban"></div><div id="att"></div><div id="qc"></div></section>
+    <section id="sec" class="hide"><div id="sgrid"></div></section>
+    <section id="log" class="hide"></section>
+    <p class="note">المواعيد مبنية على جدول صيانة هيونداي القياسي مع تشديد لمشاويرك الكثيرة وحر الشرقية. كتيّب السيارة وفني معتمد هم المرجع الأخير. تقدر تعدّل أي موعد وقت التسجيل، ولو فيه قطعة ناقصة اضغط «ضيف قطعة».</p>
+  </div>
+</div>
+
+<dialog id="mdlg"><h2 style="margin-top:0">المزيد</h2><div class="menu">
+  <button id="qs" class="p">⚡ إعداد سريع (سجّل آخر صيانة)</button>
+  <button id="gen">📝 سجّل مصروف أو ملاحظة</button>
+  <button id="cus">➕ ضيف قطعة جديدة</button>
+  <div class="dly"><label for="di">أمشي باليوم تقريبًا (كم)</label><input id="di" type="number" inputmode="numeric" min="1" max="2000"></div>
+  <button id="lo" class="d">🚪 خروج</button><button id="mx">إغلاق</button></div></dialog>
+<div id="toast" role="status" aria-live="polite"></div>
+<dialog id="dlg"><div id="dc"></div></dialog>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import{getAuth,onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword,signOut}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import{getFirestore,doc,setDoc,onSnapshot,collection,addDoc,deleteDoc,query,orderBy,serverTimestamp}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const app=initializeApp({apiKey:"AIzaSyAOA9HHI_xbRFINDM8Z_I3eWMJsw5fHS6k",authDomain:"icars-bdb8e.firebaseapp.com",projectId:"icars-bdb8e",storageBucket:"icars-bdb8e.firebasestorage.app",messagingSenderId:"234263824117",appId:"1:234263824117:web:6907e77e55a04f1db2a7bc"});
+const auth=getAuth(app),db=getFirestore(app);
+
+/* ===== الكتالوج: [id, الاسم, القسم, كم, أيام, ملاحظة] (0 = لا ينطبق) ===== */
+const CATS={eng:"المكينة",fue:"البنزين والشكمان",trn:"الجير والأكسات",brk:"البريكات (الفرامل)",sus:"الدركسون والمساعدات والمقصات",tir:"الكفرات والجنوط",cool:"الرديتر والمكيف",elc:"الكهرباء والإضاءة",ext:"الهيكل والزجاج والصبغ",int:"الداخل والفرش والديكور",chk:"فحوصات دورية",oth:"أخرى"};
+const CAT=[
+["oil","زيت المكينة + الفلتر","eng",5000,180,"غيّرهم مع بعض. 5,000 كم يناسب مشاويرك الكثيرة. المكينة جنزير مو سير، والزيت النظيف يحمي الجنزير."],
+["airf","فلتر الهواء (فلتر المكينة)","eng",15000,365,"الجو عندنا غبار: افحصه كل 7,500 كم ونظّفه بالهواء، وبدّله إذا اتّسخ."],
+["plug","البوجيهات (إيريديوم)","eng",80000,0,"فترة متحفظة. لازم نفس النوع الأصلي."],
+["coil","كويلات الشرارة","eng",0,0,"ما لها عمر ثابت. تتغير لو المكينة صارت تهتز أو طلعت لمبة المكينة."],
+["pcv","صمام تهوية الكرنك (PCV)","eng",60000,0,"قطعة رخيصة، وتلفها يسبب أوساخ بالزيت."],
+["belt","سير الدينمو والمكيف","eng",100000,0,"افحصه كل 30,000 كم. لو تشقق أو صار له صرير بدّله."],
+["tens","بكرة شد السير (التنسينر)","eng",100000,0,"تتغير مع السير. صوت طقطقة أو صرير علامة تلفها."],
+["chain","جنزير التايمنج","eng",0,0,"عمره طويل. لو سمعت صوت جنزير من المكينة أول ما تشغلها افحصه فورًا."],
+["mnt","كراسي المكينة والجير","eng",100000,0,"تتغير لو زاد الاهتزاز أو سمعت طقة عند تعشيق الجير."],
+["thr","تنظيف الثروتل (بوابة الهواء)","eng",60000,0,"لو الدورات تتذبذب وأنت واقف."],
+["vcg","جوان غطاء الصبابات","eng",0,0,"تغيّره لو شفت زيت يسرب من فوق المكينة."],
+["pan","جوان / كارتير الزيت","eng",0,0,"لو يقطر زيت تحت المكينة."],
+["o2","حساسات الأكسجين","eng",100000,0,"تلفها يزيد استهلاك البنزين ويطلع لمبة المكينة."],
+["sens","حساسات المكينة (الكرنك، الكام، الحرارة)","eng",0,0,"تتغير بعد ما يطلع كود من فحص الكمبيوتر."],
+["fuelf","فلتر البنزين (داخل التانكي)","fue",100000,0,"غالبًا يتغير مع طرمبة البنزين. عبّي من محطات موثوقة."],
+["fpump","طرمبة البنزين","fue",0,0,"لو السيارة تتقطع أو ما تشتغل بعد الوقوف افحصها."],
+["inj","غسيل البخاخات (الإنجكترز)","fue",60000,0,"اختياري. لو زاد استهلاك البنزين أو صارت المكينة ثقيلة."],
+["cap","غطاء التانكي","fue",0,0,"لو طلعت لمبة المكينة بعد التعبئة غيّره."],
+["cat","الكتلايزر","fue",0,0,"عمره طويل. فشله يعطي ريحة بيض خربان وضعف شديد."],
+["muf","الشكمان (السايلنسر)","fue",0,365,"افحصه كل سنة. صدأ أو صوت عالي يعني تسريب."],
+["exh","مطاط تعليق الشكمان","fue",0,0,"لو سمعت اهتزاز أو طقة من تحت."],
+["atf","زيت الجير (الأوتوماتيك)","trn",60000,0,"هيونداي ما تحدد موعد ثابت، والتغيير الدوري يحمي الجير مع مشاويرك الكثيرة."],
+["cvj","كاب الأكس (الجلدة المطاط)","trn",20000,0,"افحصه كل 20,000 كم. لو انقطع يطلع الشحم ويخرب الأكس."],
+["cva","الأكس (عصا الجير الأمامية)","trn",0,0,"طقطقة عند اللفّ الحاد معناها الأكس تالف."],
+["wbr","رولمان البلي (بلي الكفر)","trn",0,0,"صوت طنين يزيد مع السرعة معناه بلي تالف."],
+["bf","زيت البريك","brk",40000,730,"يمتص رطوبة مع الوقت: غيّره بالكيلو أو بالمدة أيهم أقرب."],
+["padf","تيل البريك الأمامي (الفحمات)","brk",40000,0,"افحص السماكة كل 10,000 كم. بدّله عند 3 مم أو لو سمعت صوت حديد."],
+["padr","تيل / سفايف البريك الخلفي","brk",60000,0,"افحصه مع كل تدوير كفرات."],
+["disc","أقراص البريك الأمامية (الديسكات)","brk",80000,0,"بدّلها لو تآكلت أو صار الدركسون يهتز عند البريك."],
+["discr","أقراص البريك الخلفية (إن وجدت)","brk",100000,0,"بعض الفئات خلفها طنابير مو أقراص."],
+["cal","كوبل البريك (الكاليبر)","brk",0,0,"لو السيارة تسحب لجهة عند البريك أو ريحة حرق من الكفر."],
+["hose","خراطيم البريك","brk",100000,0,"افحصها كل 30,000 كم من تشقق أو انتفاخ."],
+["hnd","كيبل بريك اليد","brk",0,0,"لو البريك اليد ارتخى أو ما يمسك."],
+["abs","حساس ABS","brk",0,0,"تلفه يشعل لمبة ABS."],
+["bst","بوستر البريك","brk",0,0,"لو الدواسة صارت قاسية جدًا."],
+["shkf","المساعدات الأمامية (الشوكات)","sus",80000,0,"افحصها لو تسرب منها زيت أو السيارة ترتد بعد المطبات."],
+["shkr","المساعدات الخلفية","sus",80000,0,"نفس علامات الأمامية."],
+["sm","كراسي الشوكات (قواعد المساعدات)","sus",80000,0,"طقة من فوق عند اللفّ أو المطبات."],
+["arm","المقصات وجلدها (البوشات)","sus",80000,0,"افحصها كل 40,000 كم. طقة عند المطبات علامة تآكل."],
+["bj","بول جوينت (كرات المقص)","sus",80000,0,"ارتخاء أو طقطقة عند اللفّ."],
+["tie","العكوس (رأس الدركسون)","sus",80000,0,"افحصها كل 40,000 كم. ارتخاء الدركسون علامة تآكلها."],
+["stl","عكس الميزان (ستابلايزر لنك)","sus",60000,0,"طقة خفيفة عند المطبات الصغيرة."],
+["stb","جلد ميزان الستابلايزر","sus",80000,0,"صرير أو طقة وقت الميلان."],
+["rack","جير الدركسون (الكبسة)","sus",0,0,"الدركسون كهربائي ما فيه زيت. يتغير لو صار فيه رخاوة أو صوت."],
+["rbt","كاب الدركسون (الجلدة)","sus",40000,0,"افحصه كل 40,000 كم من تشقق."],
+["ali","ميزان الأمامي (ترصيص التوجيه)","sus",20000,365,"لو السيارة تسحب لجهة أو بعد ما تضرب مطب قوي."],
+["tire","الكفرات (تغيير)","tir",50000,1460,"في حرارة الخليج لا تتجاوز 4 سنوات من تاريخ الصنع (رقم DOT) حتى لو شكلها سليم."],
+["rot","تدوير الكفرات","tir",10000,0,"يوزّع التآكل ويطوّل عمرها."],
+["bal","ترصيص الجنوط (بالانس)","tir",10000,0,"لو الدركسون يهتز بسرعة فوق 100."],
+["spare","الإستبن (الكفر الاحتياط) والجك","tir",0,180,"افحص الهواء ووجود الجك والمفتاح."],
+["rim","الجنوط","tir",0,0,"افحص الانبعاج أو الشروخ بعد الحفر."],
+["vlv","فالفات هواء الكفرات","tir",0,1460,"تتغير مع الكفرات."],
+["tpms","حساس ضغط الكفرات (إن وجد)","tir",0,0,"لو اشتعلت اللمبة بدون سبب."],
+["cool","ماء الرديتر (سائل التبريد)","cool",60000,1095,"استخدم النوع المحدد من الشركة. لا تفتح الغطاء والمكينة حارة."],
+["rad","الرديتر","cool",0,0,"افحص التسريب أو الصدأ أو الانسداد."],
+["hos","خراطيم الماء","cool",100000,0,"افحصها كل 30,000 كم من انتفاخ أو تشقق."],
+["thm","الثرموستات","cool",100000,0,"لو الحرارة ترتفع أو ما تسخن."],
+["wpm","طرمبة الماء","cool",100000,0,"لو سمعت صوت أو شفت تسريب من قدام المكينة."],
+["fan","مروحة الرديتر","cool",0,0,"لو الحرارة ترتفع في الزحمة."],
+["rcap","غطاء الرديتر","cool",0,730,"رخيص ومهم لضغط التبريد."],
+["ac","فحص المكيف (الغاز والأداء)","cool",0,365,"قبل الصيف."],
+["cab","فلتر المكيف (فلتر الكابينة)","cool",10000,365,"عندنا غبار: كل 10,000 كم. ضعف الهواء أو ريحة علامة اتساخه."],
+["acd","تعقيم المكيف (الريحة)","cool",0,365,"يزيل الريحة والبكتيريا."],
+["cmp","كمبروسر المكيف","cool",0,0,"لو المكيف ما يبرّد والغاز سليم."],
+["cnd","رديتر المكيف (الكندنسر)","cool",0,0,"نظّفه من الغبار والحشرات بماء خفيف."],
+["blw","موتور هواء المكيف (داخل الكابينة)","cool",0,0,"لو الهواء ضعيف أو يطلع صوت."],
+["bat","البطارية","elc",0,1095,"في حرارة الخليج عمرها 3 سنوات تقريبًا. افحصها بأي ورشة قبل الصيف."],
+["alt","الدينمو (الشاحن)","elc",0,0,"لو البطارية تفرغ أو اشتعلت لمبة البطارية."],
+["str","السلف (المارش)","elc",0,0,"لو يطقطق ولا يدور."],
+["fus","الفيوزات","elc",0,0,"افحصها لو وقف أي جهاز كهرباء."],
+["wir","الأسلاك والوصلات","elc",0,0,"افحصها لو شفت وصلات مهترئة أو رطوبة."],
+["hl","لمبات الأضواء الأمامية","elc",0,0,"غيّر الاثنتين مع بعض."],
+["tl","لمبات الخلفية والبريك والإشارات","elc",0,0,""],
+["fog","سبوتات الضباب (إن وجدت)","elc",0,0,""],
+["aim","ضبط ارتفاع الأضواء الأمامية","elc",0,365,"عشان ما تعمي اللي قدامك وتنير الطريق صح."],
+["hrn","الهورن (البوري)","elc",0,0,""],
+["snr","حساسات الرجوع والكاميرا (إن وجدت)","elc",0,0,"نظّفها من الغبار قبل ما تحكم عليها تالفة."],
+["key","بطارية الريموت","elc",0,730,"لو قلّ مدى الريموت."],
+["wmt","موتور المساحات","elc",0,0,"لو المساحات بطيئة أو واقفة."],
+["win","موتورات الزجاج الكهربائي","elc",0,0,"لو الزجاج بطيء أو يوقف."],
+["lck","أقفال الأبواب المركزية","elc",0,0,"لو باب ما يقفل مع الريموت."],
+["scr","الشاشة والراديو والسماعات","elc",0,0,""],
+["wip","مساحات الزجاج (المسّاحات)","ext",0,365,"بدّلها لو صار فيه خطوط أو صرير."],
+["wsh","طرمبة وبخاخات ماء الزجاج","ext",0,0,"لو ما يطلع الماء نظّف البخاخات بإبرة."],
+["gl","الزجاج الأمامي (القزاز)","ext",0,365,"افحص الشروخ الصغيرة بدري قبل ما تكبر."],
+["wax","غسيل شامل وتلميع وحماية الصبغ","ext",0,90,"يحمي الصبغ من الشمس والغبار."],
+["pnt","الصبغ والخدوش","ext",0,365,"عالج الخدوش بدري قبل ما يطلع صدأ."],
+["hlp","تلميع الفوانيس الأمامية","ext",0,365,"الشمس تعتّمها وتضعف الإضاءة."],
+["mir","المرايات","ext",0,0,""],
+["rub","تنعيم مطاط الأبواب والزجاج","ext",0,180,"يمنع التشقق من الحرارة."],
+["hng","تشحيم مفصلات الأبواب والكبوت والشنطة","ext",0,180,""],
+["strut","مساعدات الشنطة","ext",0,0,"لو الشنطة ما تثبت مفتوحة."],
+["bmp","الصدامات","ext",0,0,"افحص التثبيت والشقوق."],
+["und","حماية قاع السيارة والصدأ","ext",0,365,"افحص الصدأ والتسريبات."],
+["drn","مجاري تصريف الماء (الأبواب والسقف)","ext",0,180,"نظّفها عشان ما يتجمع ماء."],
+["sun","فتحة السقف (إن وجدت)","ext",0,180,"نظّف المجاري وشحّم السكة."],
+["seat","تنظيف وحماية الكنب والأقمشة","int",0,180,"شفط وتنظيف عميق ومعالج حسب نوع القماش أو الجلد."],
+["intc","تنظيف الداخل (الطبلون والسجاد والسقف)","int",0,90,"بمنتجات غير لامعة تقلل انعكاس الشمس."],
+["carp","السجاد والدعّاسات","int",0,90,"شيلها ونظّف تحتها عشان ما تتكوّن رطوبة."],
+["dsh","الطبلون (التابلو)","int",0,90,"حمايته من الشمس تمنع التشقق."],
+["hdl","سقف السيارة (قماش السقف)","int",0,365,"لو بدأ ينزل أو تغيّر لونه."],
+["tint","فحص الفيلم (عازل الحرارة)","int",0,365,"افحص الفقاعات أو التقشر."],
+["sb","أحزمة الأمان","int",0,180,"افحص التآكل وسهولة السحب والقفل."],
+["ab","لمبة الوسائد الهوائية","int",0,0,"لو اشتعلت روح الوكالة فورًا، لا تفتح بنفسك."],
+["ped","دواسات البنزين والبريك","int",0,0,"افحص التآكل أو الارتخاء."],
+["lit","إضاءة الداخل","int",0,0,""],
+["tp","ضغط الكفرات (مع الاستبن)","chk",0,14,"والكفرات باردة. القيمة المطلوبة على ملصق باب السواق."],
+["ol","مستوى زيت المكينة","chk",0,14,"المكينة مطفية وعلى أرض مستوية. المستوى بين العلامتين. النقص المتكرر يحتاج فحص."],
+["cl","مستوى ماء الرديتر","chk",0,30,"والمكينة باردة فقط. النقص المتكرر يعني تسريب."],
+["bfl","مستوى زيت البريك","chk",0,30,"نزوله الواضح يعني ان التيل خلص أو فيه تسريب."],
+["ww","ماء مسح الزجاج","chk",0,30,""],
+["lt","فحص الأضواء (أمامي، خلفي، بريك، إشارات)","chk",0,30,""],
+["lk","فحص التسريبات تحت السيارة","chk",0,30,"بقعة زيت أو ماء تحت السيارة بعد الوقوف."],
+["trd","فحص تآكل الكفرات وعمق النقشة","chk",0,30,"تآكل جهة واحدة يعني تحتاج ميزان."],
+["bt","فحص أقطاب البطارية","chk",0,90,"نظّف أي ترسبات بيضاء أو خضراء."],
+["scan","فحص الكمبيوتر (أعطال المكينة)","chk",0,180,"يكشف أعطال قبل ما تظهر."],
+["fc","فحص شامل بورشة معتمدة","chk",20000,365,"يشمل البريك والتعليق والتسريبات وقراءة الكمبيوتر."]];
+
+const ST={bad:"متأخر",soon:"قرّب وقته",ok:"تمام",new:"ما تسجل"};
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const nf=n=>Number(n).toLocaleString("en-US");
+const today=()=>new Date(Date.now()-new Date().getTimezoneOffset()*6e4).toISOString().slice(0,10);
+const S={uid:null,car:{odo:0,model:"هيونداي النترا 2020 - 1.6 لتر",ov:{},custom:[],color:"#f2f4f5",daily:80},recs:[],tab:"home",flt:"all",cat:null,q:"",unsub:[]};
+
+/* ===== الحالة ===== */
+const items=()=>[...CAT.map(([id,name,cat,km,d,tip])=>({id,name,cat,km,d,tip})),...(S.car.custom||[])].map(it=>({...it,...(S.car.ov?.[it.id]||{})}));
+function status(it){
+  const last=S.recs.filter(r=>r.itemId===it.id).sort((a,b)=>b.date.localeCompare(a.date)||b.odo-a.odo)[0];
+  if(!last)return{s:"new"};
+  const rk=it.km?last.odo+it.km-S.car.odo:null;
+  const rd=it.d?Math.ceil((new Date(last.date).getTime()+it.d*864e5-Date.now())/864e5):null;
+  let s="ok";
+  if((rk!==null&&rk<0)||(rd!==null&&rd<0))s="bad";
+  else if((rk!==null&&rk<=Math.max(500,it.km*.1))||(rd!==null&&rd<=Math.max(7,Math.round(it.d*.1))))s="soon";
+  return{s,last,rk,rd};
+}
+const every=it=>[it.km?`كل ${nf(it.km)} كم`:"",it.d?`كل ${it.d>=60?Math.round(it.d/30)+" شهر":it.d+" يوم"}`:""].filter(Boolean).join(" أو ")||"حسب الحاجة";
+
+/* ===== العرض ===== */
+/* ===== عرض ===== */
+const HM=new Set(["belt","tens","chain","mnt","wpm","thm","hos","cvj","cva","wbr","shkf","shkr","sm","arm","bj","tie","stl","stb","atf","bf","cool","bat","o2","coil","plug","pcv","padf","padr","disc","hose","alt","str","fpump"]);
+const CI={eng:"🛢️",fue:"⛽",trn:"⚙️",brk:"🛑",sus:"🔩",tir:"🛞",cool:"❄️",elc:"🔋",ext:"✨",int:"💺",chk:"✅",oth:"📦"};
+const COL=[["#f2f4f5","أبيض"],["#aeb4b9","فضي"],["#5f666c","رصاصي"],["#15181b","أسود"],["#1f4e9c","أزرق"],["#a3171f","أحمر"],["#1d6b4f","أخضر"],["#c9a24a","ذهبي"],["#d9631e","برتقالي"]];
+const QSL=["oil","atf","bf","cool","plug","airf","cab","padf","padr","bat","tire","belt","shkf","shkr","arm","tie"];
+const RANK={bad:0,soon:1,new:2,ok:3};
+const reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
+const dstr=ms=>new Date(ms-new Date().getTimezoneOffset()*6e4).toISOString().slice(0,10);
+let all=[],tt,shown=0,byId={};
+const catState=c=>{const xs=all.filter(x=>x.it.cat===c);if(xs.some(x=>x.st.s==="bad"))return"bad";if(xs.some(x=>x.st.s==="soon"))return"soon";if(xs.some(x=>x.st.s==="new"&&HM.has(x.it.id)))return"new";return xs.some(x=>x.st.s==="ok")?"ok":"new";};
+function toast(m){const t=$("toast");t.textContent=m;t.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("on"),2800);}
+function setOdo(n){
+  const from=shown,t0=performance.now();
+  const f=t=>{const k=reduce?1:Math.min(1,(t-t0)/900),v=Math.round(from+(n-from)*(1-Math.pow(1-k,3)));shown=v;
+    $("dg").innerHTML=String(v).padStart(6,"0").split("").map(d=>`<span>${d}</span>`).join("");if(k<1)requestAnimationFrame(f);};
+  requestAnimationFrame(f);
+}
+function card(it,st,mini){
+  const hm=HM.has(it.id);
+  let m=`يتغير: ${every(it)}`;
+  if(st.s==="new"&&hm&&S.car.odo>=150000)m+=`<br>⭐ مهمة لسيارة قطعت ${nf(S.car.odo)} كم`;
+  if(st.last){
+    m=`آخر مرة: ${nf(st.last.odo)} كم • ${esc(st.last.date)}<br>`;
+    const p=[];
+    if(st.rk!==null)p.push(st.rk>=0?`باقي ${nf(st.rk)} كم (تقريبًا بعد ${Math.max(1,Math.round(st.rk/(S.car.daily||80)))} يوم)`:`متأخر ${nf(-st.rk)} كم`);
+    if(st.rd!==null)p.push(st.rd>=0?`باقي ${st.rd} يوم`:`متأخر ${-st.rd} يوم`);
+    m+=p.join(" • ")+`<br>يتغير: ${every(it)}`;
+  }
+  return`<div class="card ${st.s}"><div class="r"><b>${hm?"⭐ ":""}${esc(it.name)}</b><span class="bd ${st.s}">${ST[st.s]}</span></div><p class="m">${m}</p>${mini?"":`<p class="t">${esc(it.tip)}</p>`}<button class="${st.s==="bad"||st.s==="soon"?"p":""}" data-rec="${esc(it.id)}">${it.cat==="chk"?"سجّل الفحص":"سجّل إنك غيّرته"}</button></div>`;
+}
+const QK=[["tp","ضغط الكفرات"],["ol","مستوى زيت المكينة"],["cl","ماء الرديتر"],["lt","الأضواء"],["ww","ماء الزجاج"],["lk","تسريبات تحت السيارة"]];
+function catList(){const el=$("clist");if(!el||!S.cat)return;const q=S.q.trim();
+  const xs=all.filter(x=>x.it.cat===S.cat&&(S.flt==="all"||x.st.s===S.flt)&&(!q||x.it.name.includes(q))).sort((a,b)=>RANK[a.st.s]-RANK[b.st.s]);
+  el.innerHTML=xs.length?`<div class="rows">${xs.map(x=>row(x.it,x.st)).join("")}</div>`:'<div class="empty">ما فيه شي هنا.</div>';}
+function render(){
+  if(!S.uid)return;
+  const odo=S.car.odo;
+  $("mdl").textContent=S.car.model;
+  $("hi").textContent=(new Date().getHours()<12?"صباح الخير":"مساء الخير")+" 👋";
+  if(S.odoT!==odo){S.odoT=odo;setOdo(odo);}
+  if(document.activeElement!==$("di"))$("di").value=S.car.daily||80;
+  all=items().map(it=>({it,st:status(it)}));byId=Object.fromEntries(all.map(x=>[x.it.id,x]));
+  const c=k=>all.filter(x=>x.st.s===k).length,bad=c("bad"),nw=c("new");
+  let pts=0,n=0;
+  for(const x of all){if(x.it.cat==="chk")continue;const k=x.st.s;if(k==="ok"){pts++;n++}else if(k==="soon"){pts+=.5;n++}else if(k==="bad")n++;else if(HM.has(x.it.id)){pts+=.3;n++}}
+  const score=n?Math.round(100*pts/n):0;
+  countTo($("sc"),score);$("rf").style.strokeDashoffset=326.7*(1-score/100);
+  $("rf").style.stroke=score>=70?"var(--ok)":score>=40?"var(--soon)":"var(--bad)";
+  let bn="";
+  if(!odo)bn=`<div class="ban w2">اكتب قراءة العداد فوق (مثلاً 260000) ثم افتح ⋯ واضغط «إعداد سريع».</div>`;
+  else if(bad&&"Notification"in window&&Notification.permission==="default")bn=`<div class="ban"><span>فعّل التنبيهات عشان ما يفوتك شي.</span><button data-act="notif">فعّل</button></div>`;
+  $("ban").innerHTML=bn;
+  $("alert").innerHTML=bad?`<div class="al"><span>⚠️ ${bad} قطعة متأخرة</span><button data-act="showbad">اعرضها</button></div>`:"";
+  document.documentElement.style.setProperty("--alh",$("alert").offsetHeight+"px");
+  if(bad&&!S.al){S.al=1;try{navigator.vibrate&&navigator.vibrate([200,100,200])}catch(e){}toast(`⚠️ ${bad} قطعة متأخرة`);}
+  if(bad&&!S.nt&&"Notification"in window&&Notification.permission==="granted"){S.nt=1;try{new Notification("ICARS",{body:`عندك ${bad} قطعة متأخرة في سيارتك`})}catch(e){}}
+  // الرئيسية: بس اللي يحتاج انتباه
+  const att=all.filter(x=>x.st.s==="bad"||x.st.s==="soon").sort((a,b)=>RANK[a.st.s]-RANK[b.st.s]),cap=S.more?att.length:6;
+  let h="";
+  if(!S.loaded)h='<div class="rows">'+'<div class="sk"></div>'.repeat(3)+'</div>';
+  else{
+    if(att.length)h=`<div class="hd"><h2>تحتاج انتباه</h2><small>${att.length}</small></div><div class="rows">${att.slice(0,cap).map(x=>row(x.it,x.st)).join("")}</div>`+(att.length>cap?`<button class="more" data-act="more">عرض الكل (${att.length})</button>`:"");
+    else if(!S.recs.length&&odo)h=`<div class="cta"><b>ابدأ بتسجيل آخر صيانة</b><p>اكتب كم كان العداد لما غيّرت القطع الأساسية، ويحسب لك الموعد القادم.</p><button class="p" data-act="qs">⚡ إعداد سريع</button></div>`;
+    else h=`<div class="good">✅ كل شي تمام. ما فيه شي متأخر.</div>`;
+    const star=all.filter(x=>x.st.s==="new"&&HM.has(x.it.id));
+    if(star.length)h=`<div class="hd"><h2>⭐ الأولوية</h2><small>سيارتك قطعت ${nf(odo)} كم</small></div><div class="pri">${star.map(pc).join("")}</div>`+h;
+    const rest=nw-star.length;
+    if(rest>0)h+=`<p class="note2">${rest} قطعة ثانية ما تسجلت. <button class="lnk" data-tab="sec">افتح الأقسام</button></p>`;
+  }
+  $("att").innerHTML=h;
+  if(S.loaded&&!S.la){S.la=1;const a=$("att");a.dataset.a="1";setTimeout(()=>{delete a.dataset.a},1200);}
+  $("qc").innerHTML=`<div class="hd"><h2>فحوصات سريعة</h2><small>اضغط للتسجيل</small></div><div class="qgrid">${QK.map(([id,nm])=>{const x=byId[id];return x?`<button class="qk ${x.st.s}" data-rec="${id}"><b>${nm}</b><small>${x.st.last?rem(x.it,x.st):"فحصها الحين"}</small></button>`:""}).join("")}</div>`;
+  // الأقسام
+  let sh="";
+  if(!S.cat)sh=`<div class="sec-t"><h2>الأقسام</h2><small>${all.length} قطعة</small></div><div class="cgrid">${Object.keys(CATS).map(k=>{
+    const xs=all.filter(x=>x.it.cat===k);if(!xs.length)return"";
+    const b2=xs.filter(x=>x.st.s==="bad").length,s2=xs.filter(x=>x.st.s==="soon").length,st=b2?"bad":s2?"soon":xs.some(x=>x.st.s==="ok")?"ok":"new";
+    return`<button class="cc ${st}" data-cat="${k}"><span class="i">${CI[k]}</span><b>${CATS[k]}</b><small>${xs.length} قطعة</small><small class="bd2">${b2?b2+" متأخر":s2?s2+" قرّب وقته":st==="ok"?"تمام":"ما تسجل"}</small></button>`}).join("")}</div>`;
+  else sh=`<button class="back" data-cat="">→ الأقسام</button><div class="sec-t"><h2>${CI[S.cat]} ${CATS[S.cat]}</h2></div><input id="cq" type="search" maxlength="40" placeholder="دوّر داخل القسم" aria-label="بحث" value="${esc(S.q)}"><div class="tabs sm">${[["all","الكل"],["bad","متأخر"],["soon","قرّب وقته"],["ok","تمام"],["new","ما تسجل"]].map(([k,t])=>`<button data-f="${k}" aria-pressed="${S.flt===k}">${t}</button>`).join("")}</div><div id="clist"></div>`;
+  $("sgrid").innerHTML=sh;catList();
+  // السجل
+  const tot=S.recs.reduce((a,r)=>a+(r.cost||0),0);
+  const m30=S.recs.filter(r=>r.date>=dstr(Date.now()-30*864e5)).reduce((a,r)=>a+(r.cost||0),0);
+  const ms=[];for(let i=5;i>=0;i--){const d=new Date();d.setDate(1);d.setMonth(d.getMonth()-i);ms.push(`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`);}
+  const sums=ms.map(k=>S.recs.filter(r=>r.date.startsWith(k)).reduce((a,r)=>a+(r.cost||0),0)),mx=Math.max(1,...sums);
+  const chart=`<div class="chart"><b>مصاريف آخر 6 شهور (ريال)</b><svg viewBox="0 0 300 120" role="img" aria-label="رسم المصاريف الشهرية">${sums.map((v,i)=>{const bh=Math.round(v/mx*70);return`<rect x="${i*50+10}" y="${85-bh}" width="30" height="${bh}" rx="5" fill="var(--pri)"/><text x="${i*50+25}" y="${80-bh}" text-anchor="middle" font-size="10" fill="currentColor">${v?nf(Math.round(v)):""}</text><text x="${i*50+25}" y="105" text-anchor="middle" font-size="10" fill="var(--mut)">${ms[i].slice(5)}</text>`}).join("")}</svg></div>`;
+  $("log").innerHTML=`<div class="sum"><div><b>${S.recs.length}</b>عدد السجلات</div><div><b>${nf(tot)}</b>إجمالي التكاليف (ريال)</div><div><b>${nf(m30)}</b>آخر 30 يوم (ريال)</div></div>${chart}<div class="tools"><button data-act="csv">⬇️ تصدير Excel (CSV)</button><button data-act="prt">🖨️ طباعة التقرير</button></div>`+
+    (S.recs.length?S.recs.map(r=>`<article class="rec"><div class="r"><b>${esc(r.name)}</b><button class="d" data-del="${esc(r.id)}" aria-label="حذف السجل">حذف</button></div><div class="meta">${esc(r.date)} • ${nf(r.odo)} كم${r.cost?` • ${nf(r.cost)} ريال`:""}${r.result?` • ${esc(r.result)}`:""} • ${esc(CATS[r.cat]||"")}</div>${r.note?`<p>${esc(r.note)}</p>`:""}</article>`).join(""):'<div class="empty">ما سجلت شي للحين. سجّل أول صيانة من تبويب «الرئيسية».</div>');
+  for(const k of["home","sec","log"])$(k).classList.toggle("hide",S.tab!==k);
+  if(S.pt!==S.tab){S.pt=S.tab;const el=$(S.tab);el.classList.remove("vin");void el.offsetWidth;el.classList.add("vin");}
+  document.querySelectorAll(".nav [data-tab]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.tab===S.tab));
+  const cur=COL.some(x=>x[0]===S.car.color)?S.car.color:COL[0][0];
+  $("sw").innerHTML=COL.map(([hx,nm])=>`<button data-col="${hx}" aria-label="${nm}" aria-pressed="${cur===hx}" style="background:${hx}"></button>`).join("");
+  if(S.three===undefined){
+    if(window.THREE){S.three=initCar(cur);S.three?.accent((ACC[S.acc||0][1])||"#7c6cff");}
+    else if(document.readyState==="complete"){S.three=null;$("stage").classList.add("nogl");}
+  }
+  if(S.three){S.three.setColor(cur);document.querySelectorAll(".hs").forEach(b=>{b.className="hs "+ids2st(b.dataset.hs.split(","))+(b.classList.contains("off")?" off":"")});}
+}
+const ids2st=ids=>{const xs=ids.map(i=>byId[i]).filter(Boolean);return xs.some(x=>x.st.s==="bad")?"bad":xs.some(x=>x.st.s==="soon")?"soon":xs.some(x=>x.st.s==="new"&&HM.has(x.it.id))?"new":xs.some(x=>x.st.s==="ok")?"ok":"new";};
+function rem(it,st){
+  if(!st.last)return"ما تسجل";const p=[];
+  if(st.rk!==null)p.push(st.rk>=0?`باقي ${nf(st.rk)} كم`:`متأخر ${nf(-st.rk)} كم`);
+  if(st.rd!==null)p.push(st.rd>=0?`باقي ${st.rd} يوم`:`متأخر ${-st.rd} يوم`);
+  return p.join(" • ")||"تمام";
+}
+function row(it,st){
+  let d=it.tip?`<p class="t">${esc(it.tip)}</p>`:"";
+  d+=`<p class="m">يتغير: ${every(it)}`;
+  if(st.last)d+=`<br>آخر مرة: ${nf(st.last.odo)} كم • ${esc(st.last.date)}`;
+  if(st.rk>0)d+=`<br>تقريبًا بعد ${Math.max(1,Math.round(st.rk/(S.car.daily||80)))} يوم`;
+  return`<details class="row ${st.s}"><summary><span class="ic">${CI[it.cat]||""}</span><b>${HM.has(it.id)?"⭐ ":""}${esc(it.name)}</b><em>${rem(it,st)}</em></summary><div class="rb2">${d}</p><button class="${st.s==="bad"||st.s==="soon"?"p":""}" data-rec="${esc(it.id)}">${it.cat==="chk"?"سجّل الفحص":"سجّل إنك غيّرته"}</button></div></details>`;
+}
+const pc=x=>`<div class="pc ${x.st.s}"><b>${esc(x.it.name)}</b><span>${rem(x.it,x.st)}</span><button data-rec="${esc(x.it.id)}">سجّل</button></div>`;
+function sheet(label,ids){
+  const xs=[...new Set(ids)].map(i=>byId[i]).filter(Boolean).sort((a,b)=>RANK[a.st.s]-RANK[b.st.s]);
+  $("dc").innerHTML=`<h2 style="margin-top:0">${esc(label)}</h2><div class="qs"><div class="rows">${xs.map(x=>row(x.it,x.st)).join("")}</div></div><div class="act"><button id="sc2">إغلاق</button></div>`;
+  $("sc2").onclick=close;if(!dlg.open)dlg.showModal();
+}
+function csv(){
+  const cell=v=>{v=String(v??"");if(/^[=+\-@\t\r]/.test(v))v="'"+v;return'"'+v.replace(/"/g,'""')+'"'};
+  const rows=[["التاريخ","العداد","القطعة","التكلفة","النتيجة","ملاحظة"],...S.recs.map(r=>[r.date,r.odo,r.name,r.cost||0,r.result,r.note])];
+  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+rows.map(r=>r.map(cell).join(",")).join("\r\n")],{type:"text/csv;charset=utf-8"}));
+  a.download="icars-report.csv";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+}
+function openQS(){
+  if(!S.car.odo)return toast("اكتب قراءة العداد الحالية أول (فوق).");
+  const its=items().filter(i=>QSL.includes(i.id));
+  $("dc").innerHTML=`<h2 style="margin-top:0">⚡ إعداد سريع</h2><p class="t">اكتب كم كان العداد لما غيّرت كل قطعة آخر مرة. اللي ما تدري عنه خلّه فاضي، وبعدين تسجّله لما تسويه.</p>
+  <label for="q-d">أمشي باليوم تقريبًا (كم)</label><input id="q-d" type="number" min="1" max="2000" value="${S.car.daily||80}">
+  <div class="qs">${its.map(i=>`<label for="q-${esc(i.id)}">${esc(i.name)}</label><input id="q-${esc(i.id)}" data-qi="${esc(i.id)}" type="number" inputmode="numeric" min="0" max="${S.car.odo}" placeholder="كم كيلو؟">`).join("")}</div>
+  <p class="err" id="qe" role="alert"></p><div class="act"><button class="p" id="qsv">حفظ</button><button id="qc">إلغاء</button></div>`;
+  $("qc").onclick=close;
+  $("qsv").onclick=async()=>{
+    const daily=Math.round(+$("q-d").value),odo=S.car.odo;
+    if(!(daily>=1&&daily<=2000))return $("qe").textContent="اكتب كم تمشي باليوم (1 إلى 2000).";
+    const rs=[];
+    for(const el of document.querySelectorAll("[data-qi]")){
+      if(el.value==="")continue;const v=Math.round(+el.value);
+      if(!(v>=0&&v<=odo))return $("qe").textContent="فيه رقم أكبر من العداد الحالي أو غلط.";
+      const it=its.find(i=>i.id===el.dataset.qi);
+      rs.push({itemId:it.id,name:it.name,cat:it.cat,date:dstr(Date.now()-Math.round((odo-v)/daily)*864e5),odo:v,cost:0,result:"",note:"تقدير (إعداد سريع)"});
+    }
+    $("qsv").disabled=true;
+    try{
+      await Promise.all(rs.map(r=>addDoc(collection(db,"users",S.uid,"records"),{...r,t:serverTimestamp()})));
+      await setDoc(doc(db,"users",S.uid),{daily},{merge:true});close();toast(`انحفظ ${rs.length} قطعة ✅`);
+    }catch(e){$("qe").textContent="ما انحفظ، جرّب مرة ثانية.";$("qsv").disabled=false;}
+  };
+  if(!dlg.open)dlg.showModal();
+}
+const setTheme=t=>{document.documentElement.dataset.theme=t;try{localStorage.setItem("icars-theme",t)}catch(e){}$("th").textContent=t==="light"?"🌙":"☀️";document.querySelector('meta[name=theme-color]').content=t==="light"?"#eceef0":"#0b0c0e";};
+{let t="dark";try{if(localStorage.getItem("icars-theme")==="light")t="light"}catch(e){}setTheme(t);}
+const ACC=[["إنديجو","#7c6cff"],["سماوي","#22d3ee"],["وردي","#ff5d8f"],["أرجواني","#d946ef"],["نحاسي","#e0895a"]];
+function setAcc(i){const a=ACC[i],st=document.documentElement.style;["--pg","--on","--pri"].forEach(k=>st.removeProperty(k));
+  st.setProperty("--t",a[1]);try{localStorage.setItem("icars-acc",i)}catch(e){}S.acc=i;S.three?.accent(a[1]);}
+{let i=0;try{i=+localStorage.getItem("icars-acc")||0}catch(e){}setAcc(i>=0&&i<ACC.length?i:0);}
+function shake(){const a=$("auth");a.classList.remove("shake");void a.offsetWidth;a.classList.add("shake");}
+let spl=false;const T0=performance.now();
+function hideSplash(){if(spl)return;spl=true;const el=$("splash");if(!el)return;setTimeout(()=>{el.classList.add("out");setTimeout(()=>el.remove(),700);},reduce?0:Math.max(0,1500-(performance.now()-T0)));}
+document.addEventListener("pointerdown",e=>{const b=e.target.closest("button");if(!b||b.classList.contains("hs")||reduce)return;
+  const r=b.getBoundingClientRect(),d=Math.max(r.width,r.height)*2,sp=document.createElement("span");sp.className="rpl";
+  sp.style.cssText=`width:${d}px;height:${d}px;left:${e.clientX-r.left-d/2}px;top:${e.clientY-r.top-d/2}px`;b.appendChild(sp);setTimeout(()=>sp.remove(),650);});
+document.addEventListener("visibilitychange",()=>{document.title=document.hidden?"🚗 ICARS • سيارتك تنتظرك":"ICARS | مرجع سيارتي";});
+function countTo(el,n){const f=+el.textContent||0;if(f===n)return;const t0=performance.now();
+  const st=t=>{const k=reduce?1:Math.min(1,(t-t0)/900);el.textContent=Math.round(f+(n-f)*k);if(k<1)requestAnimationFrame(st);};requestAnimationFrame(st);}
+document.addEventListener("click",async e=>{
+  const b=e.target.closest("button");if(!b)return;const d=b.dataset;
+  if(b.closest("#mdlg")&&b.id!=="mx")$("mdlg").close();
+  if(d.tab){if(d.tab==="sec"&&S.tab==="sec")S.cat=null;setTimeout(()=>{d.tab==="home"?scrollTo({top:0,behavior:reduce?"auto":"smooth"}):$(d.tab).scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"});},0);}
+  if(d.hs!==undefined){b.classList.add("tap");navigator.vibrate?.(10);S.three?.focus(d.p.split(",").map(Number),d.n.split(",").map(Number));sheet(d.l,d.hs.split(","));}
+  else if(d.cat!==undefined){S.cat=d.cat||null;S.q="";S.flt="all";render();$("sec").scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"});const cl=$("clist");if(cl){cl.dataset.a="1";setTimeout(()=>{delete cl.dataset.a},1200);}}
+  else if(d.view)S.three?.view(d.view);
+  else if(d.col){S.car.color=d.col;render();setDoc(doc(db,"users",S.uid),{color:d.col},{merge:true}).catch(()=>toast("ما انحفظ اللون"));}
+  else if(d.act==="csv")csv();
+  else if(d.act==="prt")print();
+  else if(d.act==="notif"){await Notification.requestPermission();render();}
+  else if(d.act==="xray"){const on=b.getAttribute("aria-pressed")!=="true";b.setAttribute("aria-pressed",on);S.three?.xray(on);}
+  else if(d.act==="showbad"){S.tab="home";render();$("att").scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"});}
+  else if(d.act==="more"){S.more=true;render();}
+  else if(d.act==="moreS"){S.moreS=true;render();}
+  else if(d.act==="drive"||d.act==="lights"){const on=b.getAttribute("aria-pressed")!=="true";b.setAttribute("aria-pressed",on);S.three?.[d.act](on);}
+  else if(b.id==="ac")setAcc(((S.acc||0)+1)%ACC.length);
+  else if(b.id==="th"){const f=()=>setTheme(document.documentElement.dataset.theme==="light"?"dark":"light");document.startViewTransition&&!reduce?document.startViewTransition(f):f();}
+  else if(d.act==="qs"||b.id==="qs")openQS();
+});
+$("dlg").addEventListener("close",()=>{S.three?.reset();document.activeElement?.blur?.();});
+document.addEventListener("input",e=>{if(e.target.id==="cq"){S.q=e.target.value.slice(0,40);catList();}});
+$("more").onclick=()=>$("mdlg").showModal();$("mx").onclick=()=>$("mdlg").close();
+$("di").onchange=async()=>{const v=Math.round(+$("di").value);if(!(v>=1&&v<=2000))return toast("اكتب رقم من 1 إلى 2000.");
+  try{await setDoc(doc(db,"users",S.uid),{daily:v},{merge:true});toast("انحفظ ✅");}catch(e){toast("ما انحفظ.");}};
+
+/* ===== المجسم (تقريب نترا AD 2020: 4.62م × 1.80م × 1.44م، قاعدة 2.70م) ===== */
+const HD=[
+["المكينة","oil,plug,coil,pcv,belt,tens,chain,mnt,thr,vcg,pan,o2,sens",1.5,.95,0,0,1,0],
+["فلتر الهواء","airf",1.05,.97,.58,0,1,0],
+["البطارية والكهرباء","bat,bt,alt,str,fus,wir",1.05,.97,-.58,0,1,0],
+["المكيف","ac,cab,acd,cmp,blw",.95,.99,0,0,1,0],
+["فحوصات سريعة","ol,cl,bfl,ww,lt,lk,scan,fc",1.95,.9,0,0,1,0],
+["الرديتر والتبريد","cool,cl,rad,hos,thm,wpm,fan,rcap,cnd",2.33,.58,0,1,0,0],
+["القاع والتسريبات","und,lk,muf",2.32,.35,.7,1,0,.2],
+["الأضواء الأمامية","hl,fog,aim,hlp,lt",2.26,.82,.6,1,0,.3],
+["القزاز والمساحات","gl,wip,wsh,wmt,tint",.35,1.3,0,.6,.8,0],
+["السقف","sun,hdl,drn",-.2,1.48,0,0,1,0],
+["الأبواب","hng,rub,lck,win",.1,.72,.95,0,0,1],
+["الداخل والكنب","seat,intc,carp,dsh,sb,ab,ped,lit,scr,snr,key",-.2,1.15,.8,0,0,1],
+["المرايات","mir",.82,1.03,1.02,0,0,1],
+["الكفرات الأمامية","tire,rot,bal,vlv,tpms,tp,trd,rim,ali",1.35,.62,.95,0,0,1],
+["البريكات الأمامية","bf,padf,disc,cal,hose,hnd,abs,bst",1.35,.2,.95,0,0,1],
+["الدركسون والمساعدات","shkf,shkr,sm,arm,bj,tie,stl,stb,rack,rbt",1.85,.45,.9,0,0,1],
+["الجير والأكسات","atf,cvj,cva,wbr,mnt",.45,.3,.93,0,0,1],
+["الكفرات والبريك الخلفي","padr,discr,wbr,tire,rot,bal",-1.35,.5,.95,0,0,1],
+["البنزين والشكمان","fuelf,fpump,inj,cap,cat,muf,exh",-2.33,.42,0,-1,0,0],
+["الأضواء الخلفية","tl",-2.33,.82,.6,-1,0,.3],
+["الشنطة والإستبن","spare,strut",-1.9,1.03,0,0,1,0],
+["الصبغ والصدام","wax,pnt,bmp",-1,.82,.95,0,0,1]];
+function initCar(color){
+  const T=window.THREE,cv=$("cv"),stg=$("stage");let r;
+  try{r=new T.WebGLRenderer({canvas:cv,antialias:true,alpha:true});}catch(e){stg.classList.add("nogl");return null;}
+  r.setPixelRatio(Math.min(devicePixelRatio||1,2));
+  const sc=new T.Scene(),cam=new T.PerspectiveCamera(32,1,.1,60);
+  sc.add(new T.HemisphereLight(0xeef3ff,0x22262b,1));
+  const d1=new T.DirectionalLight(0xffffff,.9);d1.position.set(4,7,5);sc.add(d1);
+  const d2=new T.DirectionalLight(0xb9c8ff,.4);d2.position.set(-5,3,-4);sc.add(d2);
+  const M=(c,o={})=>new T.MeshStandardMaterial({color:c,...o});
+  const bm=M(color,{metalness:.45,roughness:.28}),dark=M(0x0a0d10,{roughness:.6}),chrome=M(0xc9d3d9,{metalness:1,roughness:.2}),
+    glass=M(0x10202c,{metalness:.9,roughness:.08,transparent:true,opacity:.88});
+  const car=new T.Group();sc.add(car);
+  const hlm=M(0xf4fbff,{emissive:0xbfe8ff,emissiveIntensity:.8}),beamM=new T.MeshBasicMaterial({color:0xfff3b0,transparent:true,opacity:.16,depthWrite:false,side:T.DoubleSide}),wheels=[],beams=[];
+  const L1=new T.PointLight(0xaab0b7,.8,14),L2=new T.PointLight(0xff8a4c,.5,14);sc.add(L1,L2);
+  const road=new T.Group();road.visible=false;sc.add(road);const dashes=[];
+  for(let i=0;i<12;i++)for(const z of[-1.75,1.75]){const d=new T.Mesh(new T.BoxGeometry(.5,.01,.07),new T.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:.5}));d.position.set(-3.6+i*.6,.013,z);road.add(d);dashes.push(d);}
+  const add=(g,m,x,y,z,ry=0,rz=0)=>{const o=new T.Mesh(g,m);o.position.set(x,y,z);o.rotation.set(0,ry,rz);car.add(o);return o;};
+  const ex=(pts,w,mat,bev)=>{const sh=new T.Shape();pts.forEach((p,i)=>i?sh.lineTo(p[0],p[1]):sh.moveTo(p[0],p[1]));
+    const g=new T.ExtrudeGeometry(sh,{depth:w-2*bev,bevelEnabled:true,bevelSize:bev,bevelThickness:bev,bevelSegments:3,curveSegments:6});
+    g.translate(0,0,-(w-2*bev)/2);car.add(new T.Mesh(g,mat));};
+  const bx=(a,b,c)=>new T.BoxGeometry(a,b,c),cy=(a,l,n=20)=>new T.CylinderGeometry(a,a,l,n);
+  ex([[-2.24,.3],[-2.3,.55],[-2.28,.93],[-1.6,.99],[.85,.99],[1.5,.93],[1.95,.88],[2.2,.8],[2.29,.64],[2.3,.42],[2.18,.3]],1.8,bm,.05);
+  ex([[-1.22,.98],[-.8,1.36],[-.4,1.44],[.3,1.43],[.88,.98]],1.56,glass,.02);
+  add(bx(1.1,.04,1.54),bm,-.1,1.45,0);
+  /* أجزاء داخلية تظهر بوضع «شفّاف» */
+  const G=(g,c,x,y,z,rz=0)=>add(g,M(c,{metalness:.5,roughness:.5}),x,y,z,0,rz);
+  G(bx(.75,.5,.62),0x5a6067,1.45,.6,0);G(bx(.6,.05,.5),0x23262a,1.45,.86,0);G(bx(.26,.2,.18),0x1d1f22,1.05,.78,-.58);G(bx(.3,.14,.26),0x333,1.05,.8,.58);
+  G(bx(.05,.42,1.15),0x8a9097,2.1,.58,0);G(cy(.2,.06,24),0x111,1.95,.58,0,Math.PI/2);G(bx(.7,.35,.4),0x4a4f55,.6,.5,0);G(bx(1,.22,.85),0x3a3f45,-.9,.42,0);
+  G(cy(.04,3.4,10),0x777d83,.2,.34,.25,Math.PI/2);G(cy(.1,.7,14),0x6b7177,-1.85,.36,.25,Math.PI/2);G(cy(.07,.4,12),0x9aa0a6,.9,.34,.25,Math.PI/2);
+  for(const s of[1,-1]){G(bx(.1,.45,.45),0x1a1c1f,-.45,1.17,s*.4);
+    add(bx(.8,.07,.07),bm,.59,1.205,s*.785,0,Math.atan2(.45,-.58));
+    add(bx(.6,.07,.07),bm,-1.01,1.17,s*.785,0,Math.atan2(.38,.42));
+    add(bx(.06,.46,.07),bm,-.35,1.205,s*.785);
+    add(bx(.12,.1,.12),bm,.82,1.03,s*.95);
+    add(bx(3.2,.07,.03),dark,0,.36,s*.905);
+    for(const x of[.5,-.4,-1.05])add(bx(.012,.56,.012),dark,x,.66,s*.903);
+    for(const x of[.15,-.75])add(bx(.16,.025,.02),chrome,x,.8,s*.908);
+    add(bx(.14,.08,.46),hlm,2.24,.78,s*.58);
+    {const bc=new T.Mesh(new T.ConeGeometry(.5,3,20,1,true),beamM);bc.rotation.z=Math.PI/2;bc.position.set(3.8,.78,s*.58);bc.visible=false;car.add(bc);beams.push(bc);}
+    add(bx(.06,.1,.5),M(0xff1f1f,{emissive:0xaa0000,emissiveIntensity:.9}),-2.325,.8,s*.58);
+    for(const x of[1.35,-1.35]){
+      const w=new T.Group();w.position.set(x,.335,s*.82);car.add(w);wheels.push(w);
+      const part=(g,m,px=0,py=0,rz=0)=>{const o=new T.Mesh(g,m);o.position.set(px,py,0);o.rotation.z=rz;w.add(o);return o;};
+      part(cy(.335,.23,36),M(0x111315,{roughness:.9})).rotation.x=Math.PI/2;
+      part(cy(.235,.235,30),chrome).rotation.x=Math.PI/2;
+      for(let i=0;i<5;i++){const a=i*Math.PI*2/5;part(bx(.07,.1,.24),dark,Math.cos(a)*.14,Math.sin(a)*.14,a-Math.PI/2);}
+      part(cy(.06,.25,16),dark).rotation.x=Math.PI/2;
+      const ar=new T.Mesh(new T.CircleGeometry(.41,32),dark);ar.position.set(x,.335,s*.902);if(s<0)ar.rotation.y=Math.PI;car.add(ar);
+    }
+  }
+  add(bx(.05,.2,.95),dark,2.325,.53,0);add(bx(.03,.23,1.0),chrome,2.318,.53,0);add(bx(.05,.09,1.2),dark,2.3,.37,0);add(bx(.02,.13,.44),M(0xeeeeee),-2.325,.55,0);
+  const sh=document.createElement("canvas");sh.width=sh.height=128;const g=sh.getContext("2d"),gr=g.createRadialGradient(64,64,4,64,64,64);
+  gr.addColorStop(0,"rgba(0,0,0,.6)");gr.addColorStop(1,"rgba(0,0,0,0)");g.fillStyle=gr;g.fillRect(0,0,128,128);
+  const pl=new T.Mesh(new T.PlaneGeometry(7.5,4),new T.MeshBasicMaterial({map:new T.CanvasTexture(sh),transparent:true,depthWrite:false}));pl.rotation.x=-Math.PI/2;pl.position.y=.01;sc.add(pl);
+  const ring=new T.Mesh(new T.RingGeometry(3.1,3.14,72),new T.MeshBasicMaterial({color:0xaab0b7,transparent:true,opacity:.4,side:T.DoubleSide}));ring.rotation.x=-Math.PI/2;ring.position.y=.012;sc.add(ring);
+  const els=[];
+  HD.forEach(([l,ids,x,y,z,nx,ny,nz])=>(z?[1,-1]:[1]).forEach(sg=>{
+    const b=document.createElement("button");b.className="hs new";const d=b.dataset;
+    d.hs=ids;d.l=l;d.p=`${x},${y},${z*sg}`;d.n=`${nx},${ny},${nz*sg}`;b.setAttribute("aria-label",l);$("hs").appendChild(b);
+    els.push({b,p:new T.Vector3(x,y,z*sg),n:new T.Vector3(nx,ny,nz*sg)});}));
+  let yaw=2.4,ty=.9,pit=.2,tp=.2,vel=0,idle=performance.now(),drag=null,base=6.6,dist=reduce?6.6:13,td=6.6,foc=false,vis=true,W=1,H=1,drv=false,hov=false,arr=reduce?0:1;
+  const tgt=new T.Vector3(0,.55,0),tt2=new T.Vector3(0,.55,0);
+  const rs=()=>{W=stg.clientWidth;H=stg.clientHeight;r.setSize(W,H,false);cam.aspect=W/H;cam.updateProjectionMatrix();base=6.6*Math.max(1,1.5/cam.aspect);if(!foc)td=base;};
+  new ResizeObserver(rs).observe(stg);rs();if(reduce)dist=base;
+  new IntersectionObserver(([en])=>{vis=en.isIntersecting;}).observe(stg);
+  stg.addEventListener("pointerenter",()=>hov=true);stg.addEventListener("pointerleave",()=>hov=false);
+  stg.addEventListener("pointerdown",e=>{stg.classList.add("used");if(e.target.closest("button"))return;drag={x:e.clientX,y:e.clientY};idle=performance.now();stg.setPointerCapture(e.pointerId);});
+  stg.addEventListener("pointermove",e=>{if(!drag)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;drag.x=e.clientX;drag.y=e.clientY;
+    ty-=dx*.008;vel=-dx*.008;if(e.pointerType!=="touch")tp=Math.min(1.3,Math.max(.03,tp+dy*.006));idle=performance.now();});
+  const up=()=>{drag=null;idle=performance.now();};stg.addEventListener("pointerup",up);stg.addEventListener("pointercancel",up);
+  const near=a=>a+Math.PI*2*Math.round((ty-a)/(Math.PI*2));
+  const v=new T.Vector3();
+  const tick=()=>{requestAnimationFrame(tick);if(!vis||document.hidden)return;
+    if(!drag){if(Math.abs(vel)>1e-4){ty+=vel;vel*=.95;}else if(!reduce&&!foc&&!hov&&!drv&&performance.now()-idle>3500)ty+=.0025;}
+    yaw+=(ty-yaw)*.1;pit+=(tp-pit)*.1;tgt.lerp(tt2,.1);dist+=(td-dist)*.08;
+    const cp=Math.cos(pit);cam.position.set(tgt.x+Math.sin(yaw)*cp*dist,tgt.y+Math.sin(pit)*dist,tgt.z+Math.cos(yaw)*cp*dist);cam.lookAt(tgt);
+    if(arr>0){arr=Math.max(0,arr-.011);car.position.x=-9*arr*arr;if(arr>.02)wheels.forEach(w=>w.rotation.z-=.4);}
+    const tm=performance.now()/1000;
+    L1.position.set(Math.cos(tm*.5)*4.5,2.6,Math.sin(tm*.5)*4.5);L2.position.set(Math.cos(tm*.35+3)*4.5,1.6,Math.sin(tm*.35+3)*4.5);
+    if(drv){wheels.forEach(w=>w.rotation.z-=.32);dashes.forEach(d=>{d.position.x-=.07;if(d.position.x<-3.6)d.position.x+=7.2;});car.position.y=Math.sin(tm*16)*.007;car.rotation.z=Math.sin(tm*6)*.003;}
+    else{car.position.y=0;car.rotation.z=0;}
+    r.render(sc,cam);
+    const P={bad:3,soon:2,new:1,ok:0},cand=[];
+    for(const e of els){v.copy(e.p).project(cam);const dv=cam.position.clone().sub(e.p).normalize();
+      e.x=(v.x*.5+.5)*W;e.y=(-v.y*.5+.5)*H;e.ok=e.n.dot(dv)>.3&&v.z<1&&arr<.02;e.pr=P[e.b.className.split(" ")[1]]||0;if(e.ok)cand.push(e);}
+    cand.sort((a,b)=>b.pr-a.pr);const put=[];
+    for(const e of cand){if(put.some(q=>Math.hypot(q.x-e.x,q.y-e.y)<34))e.ok=false;else put.push(e);}
+    for(const e of els){e.b.style.translate=`${e.x}px ${e.y}px`;e.b.classList.toggle("off",!e.ok);}
+  };
+  tick();
+  const home=()=>{foc=false;tt2.set(0,.55,0);td=base;};
+  return{setColor:h=>bm.color.set(h),lights:on=>{hlm.emissiveIntensity=on?2.2:.8;beams.forEach(b=>b.visible=on);},drive:on=>{drv=on;road.visible=on;},accent:c=>{ring.material.color.set(c);L1.color.set(c);},
+    reset:()=>{if(foc){home();tp=.2;}},
+    focus:(p,n)=>{foc=true;idle=performance.now();vel=0;tt2.set(p[0]*.7,Math.max(.45,p[1]),p[2]*.7);td=base*.55;
+      if(n[0]||n[2])ty=near(Math.atan2(n[0],n[2]));tp=n[1]>.5?.75:.22;},
+    xray:on=>{[bm,glass].forEach(m=>{m.transparent=on||m===glass;m.opacity=on?(m===glass?.12:.16):(m===glass?.88:1);m.depthWrite=!on;m.needsUpdate=true;});},
+    view:k=>{idle=performance.now();vel=0;home();tp=k==="top"?1.2:.2;
+      if(k==="front")ty=near(Math.PI/2);else if(k==="rear")ty=near(-Math.PI/2);else if(k==="side")ty=Math.abs(near(0)-ty)<Math.abs(near(Math.PI)-ty)?near(0):near(Math.PI);}};
+}
+
+/* ===== النوافذ ===== */
+const dlg=$("dlg");
+const close=()=>{if(reduce||!dlg.open)return dlg.close();dlg.classList.add("out");setTimeout(()=>{dlg.close();dlg.classList.remove("out");},180);};
+function openRec(it){
+  const gen=!it,chk=it?.cat==="chk";
+  $("dc").innerHTML=`<h2 style="margin-top:0">${gen?"سجّل أي مصروف أو ملاحظة":esc(it.name)}</h2><div id="ff">
+  ${gen?`<label for="f-n">العنوان</label><input id="f-n" maxlength="80" placeholder="مثال: غسيل مكينة، تركيب سماعات">`:""}
+  <div class="row2"><div><label for="f-d">التاريخ</label><input id="f-d" type="date" value="${today()}" max="${today()}"></div>
+  <div><label for="f-o">العداد (كم)</label><input id="f-o" type="number" inputmode="numeric" min="0" max="2000000" value="${S.car.odo}"></div></div>
+  <label for="f-c">التكلفة (ريال) - اختياري</label><input id="f-c" type="number" inputmode="decimal" min="0" max="10000000" step="0.01">
+  ${chk?`<label for="f-r">نتيجة الفحص</label><select id="f-r"><option>تمام</option><option>يبي متابعة</option><option>يبي تصليح</option></select>`:""}
+  <label for="f-t">ملاحظاتك (الماركة، الورشة، أي تفاصيل)</label><textarea id="f-t" rows="3" maxlength="500"></textarea>
+  ${gen?"":`<div class="row2"><div><label for="f-k">يتغير كل (كم)</label><input id="f-k" type="number" min="0" max="500000" value="${it.km}"></div><div><label for="f-y">يتغير كل (يوم)</label><input id="f-y" type="number" min="0" max="3650" value="${it.d}"></div></div>`}
+  <p class="err" id="fe" role="alert"></p>
+  <div class="act"><button class="p" id="fs">حفظ</button><button id="fc">إلغاء</button></div></div>`;
+  $("fc").onclick=close;
+  $("fs").onclick=async()=>{
+    const err=m=>$("fe").textContent=m;
+    const date=$("f-d").value,odo=Math.round(+$("f-o").value),cost=+($("f-c").value||0);
+    const name=gen?$("f-n").value.trim():it.name;
+    if(!name)return err("اكتب العنوان.");
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(date)||date>today())return err("التاريخ مو صحيح.");
+    if(!Number.isFinite(odo)||odo<0||odo>2e6)return err("قراءة العداد مو صحيحة.");
+    if(!Number.isFinite(cost)||cost<0||cost>1e7)return err("التكلفة مو صحيحة.");
+    const prev=S.recs.filter(r=>r.itemId===(gen?"gen":it.id)).sort((a,b)=>b.date.localeCompare(a.date))[0];
+    if(prev&&date>=prev.date&&odo<prev.odo&&!confirm("العداد أقل من آخر مرة سجلتها لنفس القطعة. متأكد؟"))return;
+    $("fs").disabled=true;
+    try{
+      await addDoc(collection(db,"users",S.uid,"records"),{itemId:gen?"gen":it.id,name:name.slice(0,80),cat:gen?"oth":it.cat,date,odo,cost,result:chk?$("f-r").value:"",note:$("f-t").value.trim().slice(0,500),t:serverTimestamp()});
+      const upd={};
+      if(odo>S.car.odo)upd.odo=odo;
+      if(!gen){const km=Math.round(+$("f-k").value||0),d=Math.round(+$("f-y").value||0);
+        if(km<0||km>5e5||d<0||d>3650){$("fs").disabled=false;return err("الفترة مو صحيحة.");}
+        if(km!==it.km||d!==it.d)upd.ov={...(S.car.ov||{}),[it.id]:{km,d}};}
+      if(Object.keys(upd).length)await setDoc(doc(db,"users",S.uid),upd,{merge:true});
+      close();
+    }catch(e){err("ما انحفظ، تأكد من النت وجرّب مرة ثانية.");$("fs").disabled=false;}
+  };
+  if(!dlg.open)dlg.showModal();
+}
+function openCustom(){
+  $("dc").innerHTML=`<h2 style="margin-top:0">ضيف قطعة جديدة</h2>
+  <label for="c-n">الاسم</label><input id="c-n" maxlength="80">
+  <label for="c-c">القسم</label><select id="c-c">${Object.entries(CATS).map(([k,v])=>`<option value="${k}">${v}</option>`).join("")}</select>
+  <div class="row2"><div><label for="c-k">كل (كم)</label><input id="c-k" type="number" min="0" max="500000" value="0"></div><div><label for="c-y">كل (يوم)</label><input id="c-y" type="number" min="0" max="3650" value="0"></div></div>
+  <label for="c-t">ملاحظة</label><input id="c-t" maxlength="200"><p class="err" id="ce" role="alert"></p>
+  <div class="act"><button class="p" id="cs">إضافة</button><button id="cc">إلغاء</button></div>`;
+  $("cc").onclick=close;
+  $("cs").onclick=async()=>{
+    const name=$("c-n").value.trim(),km=Math.round(+$("c-k").value||0),d=Math.round(+$("c-y").value||0);
+    if(!name)return $("ce").textContent="اكتب الاسم.";
+    if(km<0||km>5e5||d<0||d>3650||(!km&&!d))return $("ce").textContent="حدد كل كم كيلو أو كل كم يوم.";
+    if((S.car.custom||[]).length>=150)return $("ce").textContent="وصلت للحد الأقصى.";
+    const id="x"+Date.now().toString(36);
+    try{await setDoc(doc(db,"users",S.uid),{custom:[...(S.car.custom||[]),{id,name,cat:$("c-c").value,km,d,tip:$("c-t").value.trim().slice(0,200)}]},{merge:true});close();}
+    catch(e){$("ce").textContent="تعذر الحفظ.";}
+  };
+  if(!dlg.open)dlg.showModal();
+}
+
+/* ===== الأحداث ===== */
+document.addEventListener("click",async e=>{
+  const b=e.target.closest("button");if(!b)return;
+  if(b.dataset.tab){S.tab=b.dataset.tab;render();}
+  else if(b.dataset.f){S.flt=b.dataset.f;render();}
+  else if(b.dataset.rec)openRec(items().find(i=>i.id===b.dataset.rec));
+  else if(b.dataset.del){if(confirm("تبي تحذف هالسجل نهائي؟"))deleteDoc(doc(db,"users",S.uid,"records",b.dataset.del)).catch(()=>toast("ما انحذف."));}
+});
+$("gen").onclick=()=>openRec(null);$("cus").onclick=openCustom;
+$("lo").onclick=()=>{$("app").classList.add("leave");setTimeout(()=>{signOut(auth);$("app").classList.remove("leave");},reduce?0:380);};
+$("ob").onclick=async()=>{
+  const v=Math.round(+$("oi").value);
+  if(!Number.isFinite(v)||v<0||v>2e6)return toast("القراءة مو صحيحة.");
+  if(v<S.car.odo&&!confirm("القراءة أقل من الحالية. متأكد؟"))return;
+  try{await setDoc(doc(db,"users",S.uid),{odo:v},{merge:true});$("oi").value="";}catch(e){toast("تعذر الحفظ.");}
+};
+async function authGo(create){
+  $("ae").textContent="";
+  const em=$("em").value.trim(),pw=$("pw").value;
+  if(!em||pw.length<8)return $("ae").textContent="اكتب إيميل صحيح وباسوورد 8 أحرف على الأقل.";
+  $(create?"su":"li").classList.add("ld");try{await(create?createUserWithEmailAndPassword:signInWithEmailAndPassword)(auth,em,pw);}
+  catch(e){shake();$("ae").textContent=create?"ما انعمل الحساب (يمكن الإيميل مستخدم أو التسجيل مقفل).":"الإيميل أو الباسوورد غلط.";}finally{$("li").classList.remove("ld");$("su").classList.remove("ld");}
+}
+$("af").onsubmit=e=>{e.preventDefault();authGo(false);};
+$("su").onclick=()=>authGo(true);
+
+onAuthStateChanged(auth,u=>{hideSplash();
+  S.unsub.forEach(f=>f());S.unsub=[];
+  if(!u){S.uid=null;S.recs=[];S.loaded=0;S.la=0;$("app").classList.add("hide");$("auth").classList.remove("hide");$("pw").value="";return;}
+  S.uid=u.uid;$("auth").classList.add("hide");$("app").classList.remove("hide");$("app").classList.remove("enter");void $("app").offsetWidth;$("app").classList.add("enter");
+  S.unsub.push(onSnapshot(doc(db,"users",u.uid),s=>{
+    if(!s.exists()){setDoc(doc(db,"users",u.uid),{odo:0,model:S.car.model,ov:{},custom:[]});return;}
+    S.car={...S.car,...s.data()};render();
+  },()=>{}));
+  S.unsub.push(onSnapshot(query(collection(db,"users",u.uid,"records"),orderBy("date","desc")),s=>{
+    S.recs=s.docs.map(d=>({id:d.id,...d.data()}));S.loaded=1;render();
+  },()=>{}));
+});
+render();
+</script>
+</body>
+</html>
